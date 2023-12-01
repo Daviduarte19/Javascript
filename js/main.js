@@ -17,7 +17,7 @@ let alunos = [
 
 // carregar os dados do array na tabela
 window.onload = (event) => {
-    let tbody = document.querySelector("#myTable");
+    let tbody = document.querySelector("tbody");
 alunos.forEach((aluno, index) => {
     // 1 momento
     let tr = document.createElement("tr");
@@ -34,7 +34,7 @@ alunos.forEach((aluno, index) => {
     tdEmail.textContent = aluno.email;
     tdTelefone.textContent = aluno.telefone;
     tdProfissao.textContent = aluno.profissao;
-    tdBotao.innerHTML = `<button class="btn-remover" onclick="remover(this)" >Remover</button>`
+    tdBotao.innerHTML = `<button class="btn btn-danger" onclick="remover(this)" >Remover</button>`
 
     tr.appendChild(tdCod);
     tr.appendChild(tdNome);
@@ -44,12 +44,14 @@ alunos.forEach((aluno, index) => {
     tr.appendChild(tdBotao);
 
     tbody.appendChild(tr);
-
+   initPieChart();
 
 });
 
 
 }
+
+
 
 function remover (id){
     let row = id.parentNode.parentNode.id;
@@ -60,41 +62,73 @@ function remover (id){
 
 function adicionar(){
     //Definindo as variaveis e recebendo os dados
-     let nome = document.getElementById('nome').value;
-     let email =document.getElementById('email').value;
-     let telefone =document.getElementById('telefone').value;
-     let profissao = document.getElementById('profissao').value;
-     let table = document.getElementById('myTable');
- 
-     //Calculando o tamanho da Tabela
-     let tableSize = table.rows.length;
-     //Inserindo uma linha abaixo da Tabela
-     let row = table.insertRow(tableSize);
-     let col1 = row.insertCell(0);
-     let col2 = row.insertCell(1);
-     let col3 = row.insertCell(2);
-     let col4 = row.insertCell(3);
-     let col5 = row.insertCell(4);
-     let col6 = row.insertCell(5);
-      //Adicionando o id no elemento a ser criado
-     row.id = tableSize;
-     //Criando o codigo do botão para remover a linha
-     let btnCode = "<button class='remove-btn' onclick='remover(this)'>Remover</button>";
-   //Preenchendo as celulas da linha
-   console.log(tableSize)
-     col1.innerHTML = tableSize;
-     col2.innerHTML = nome;
-     col3.innerHTML = email;
-     col4.innerHTML = telefone;
-     col5.innerHTML = profissao;
-     col6.innerHTML = btnCode;
-  //Limpando os campos de inserção de dados
-     document.getElementById('nome').value = "";
-     document.getElementById('email').value = "";
-     document.getElementById('telefone').value = "";
-     document.getElementById('profissao').value = "";
- //Retornando 'false' para impedir o reload da pagina
-     return false
- 
- }
+    let nome = document.getElementById('nome').value;
+    let email =document.getElementById('email').value;
+    let telefone =document.getElementById('telefone').value;
+    let profissao = document.getElementById('profissao').value;
+    let table = document.getElementById('myTable');
 
+    //Calculando o tamanho da Tabela
+    let tableSize = table.rows.length;
+    //Inserindo uma linha abaixo da Tabela
+    let row = table.insertRow(tableSize);
+    let col1 = row.insertCell(0);
+    let col2 = row.insertCell(1);
+    let col3 = row.insertCell(2);
+    let col4 = row.insertCell(3);
+    let col5 = row.insertCell(4);
+    let col6 = row.insertCell(5);
+     //Adicionando o id no elemento a ser criado
+    row.id = tableSize;
+    //Criando o codigo do botão para remover a linha
+    let btnCode = "<button class='btn btn-danger' onclick='remover(this)'>Remover</button>";
+  //Preenchendo as celulas da linha
+  console.log(tableSize)
+    col1.innerHTML = tableSize;
+    col2.innerHTML = nome;
+    col3.innerHTML = email;
+    col4.innerHTML = telefone;
+    col5.innerHTML = profissao;
+    col6.innerHTML = btnCode;
+ //Limpando os campos de inserção de dados
+    document.getElementById('nome').value = "";
+    document.getElementById('email').value = "";
+    document.getElementById('telefone').value = "";
+    document.getElementById('profissao').value = "";
+//Retornando 'false' para impedir o reload da pagina
+    return false
+
+};
+
+const initPolarAreaChart = () => {
+    removerChart();
+    // 1 passo: pegar o elemento #myChart
+    const ctx = document.getElementById('myChart');
+
+    //2 passo: definir os dados do grafico
+    const data = {
+        labels: ['Frontend', 'Backend', 'Fullstack','Mobile'],
+        datasets: [{
+            label: 'Quantidade',
+            data: [ 11, 15, 7, 3],
+            backgroundColor: ['pink', 'lightblue', 'lightgreen', 'orange']
+        }]
+    };
+
+    const polarAreaChart = new Chart(
+        ctx,
+        {
+            type: 'polarArea',
+            data: data
+        }
+    );
+};
+
+
+const removerChart = () => {
+    const divChart = document.querySelector('.chart');
+    document.getElementById("myChart").remove();
+    const myChart = document.createElement("canvas");
+    myChart.id = "myChart";
+    divChart.appendChild(myChart);
+};
