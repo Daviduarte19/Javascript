@@ -23,7 +23,7 @@ export const createGame = (game) => {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(jogoTeste)
+        body: JSON.stringify(game)
     })
         .then(response => response.json())
         .then(data => console.log('sucesso: ', data))
